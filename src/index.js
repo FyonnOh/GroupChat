@@ -28,8 +28,9 @@ const Index = (props) => {
       }
     })
   }, []);
-
-  console.log(props.currentUser);
+  
+  console.log("store");
+  console.log(store.getState());
 
   return <Switch>
           <Route path="/login" component={Login}/>
@@ -67,3 +68,9 @@ ReactDOM.render(
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
+
+// A store is an object with properties like subscribe, dispatch
+// have a method to dispatch action, 
+//method to subcribe to a store (get notified everytime the state changes)
+// getState: get currentState of store
+// to change state must dispatch action, cannot directly set state

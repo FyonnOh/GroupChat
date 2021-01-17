@@ -1,4 +1,4 @@
-import {SET_USER} from './actiontypes';
+import {SET_USER, SET_CHANNEL} from './actiontypes';
 
 export const setUser = (user) => {
     return {
@@ -8,3 +8,19 @@ export const setUser = (user) => {
         }
     }
 }
+
+export const setChannel = (channel) => {
+    return {
+        type: SET_CHANNEL,
+        payload : {
+            currentChannel : channel
+        }
+    }
+}
+
+//defining actions
+// {type:
+// payload: {
+//  }
+// }
+
