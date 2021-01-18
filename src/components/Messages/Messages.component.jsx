@@ -14,6 +14,8 @@ const Messages = (props) => {
 
     const [messagesState, setMessagesState] = useState([]);
 
+    const [searchTermState, setSearchTermState] = useState("");
+
     useEffect(() => {
         if(props.channel) {
             setMessagesState([]);
@@ -30,20 +32,53 @@ const Messages = (props) => {
     //add props.channel, if props.channel changes, useEffect will be executed
 
     const displayMessages = () => {
-        if (messagesState.length > 0) {
-            return messagesState.map((message) => {
+        let messagesToDisplay = searchTermState? filterMessageBySearchTerm() : messagesState;
+        if (messagesToDisplay.length > 0) {
+            return messagesToDisplay.map((message) => {
                 return <MessageContent ownMessage={message.user.id === props.user.uid} key={message.timestamp} message={message} />
             })
         }
     }
 
-    return <div className="messages"><MessageHeader/>
-        <Segment className="messagecontent">
-            <Comment.Group>
-                {displayMessages()}
-            </Comment.Group>
-        </Segment>
-    <MessageInput/></div>
+    const uniqueUsersCount = () => {
+        const uniqueUsers = messagesState.reduce((acc,message) => {
+            if(!acc.includes(message.user.name)) {
+                acc.push(message.user.name);
+            }
+            return acc;
+        }, []);
+
+        return uniqueUsers.length;
+    }
+
+    const searchTermChange = (e) => {
+        const target = e.target;
+        setSearchTermState(target.value);
+    }
+
+    const filterMessageBySearchTerm = () => {
+        const regex = new RegExp(searchTermState,  "gi");
+        const messages = messagesState.reduce((acc, message) => {
+            if ((message.content && message.content.match(regex)) || message.user.name.match(regex)) {
+                acc.push(message);
+            }
+            return acc;
+        }, []);
+        return messages;
+    }
+
+    if (props.user) {
+    
+        return <div className="messages"><MessageHeader searchTermChange={searchTermChange} channelName={props.channel?.name} uniqueUsers={uniqueUsersCount()}/>
+            <Segment className="messagecontent">
+                <Comment.Group>
+                    {displayMessages()}
+                </Comment.Group>
+            </Segment>
+        <MessageInput/></div>
+    } else {
+        return null;
+    }
 }
 
 const mapStateToProps = (state) => {

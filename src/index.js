@@ -28,9 +28,6 @@ const Index = (props) => {
       }
     })
   }, []);
-  
-  console.log("store");
-  console.log(store.getState());
 
   return <Switch>
           <Route path="/login" component={Login}/>

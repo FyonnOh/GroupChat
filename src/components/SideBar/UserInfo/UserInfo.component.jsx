@@ -16,8 +16,8 @@ const UserInfo = (props) => {
 
     const signOut = () => {
         firebase.auth()
-        .signOut()
-        .then(() => console.log("user signed out"));
+            .signOut()
+            .then(() => console.log("user signed out"));
     }
 
     if(props.user) {

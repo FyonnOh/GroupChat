@@ -1,15 +1,15 @@
 import React from 'react';
 import {Segment, Header, Input, Icon} from 'semantic-ui-react'
 
-const MessageHeader = () => {
+const MessageHeader = (props) => {
     return <Segment clearing>
-        <Header floated="left" fluid="true as="h2>
+        <Header floated="left" fluid="true" as="h2">
             <span>
-                CHANNEL
+                {props.channelName}
                 <Icon name="star outline"/>
             </span>
             <Header.Subheader>
-              3 Users  
+                {props.uniqueUsers} User{props.uniqueUsers === 1? "" : "s"}
             </Header.Subheader>
         </Header>
         <Header floated="right">
@@ -18,6 +18,7 @@ const MessageHeader = () => {
             icon ="search"
             placeholder =" Search Messages"
             size="mini"
+            onChange = {props.searchTermChange}
             />
         </Header>
     </Segment>
